@@ -1,4 +1,45 @@
-FROM jgoerzen/debian-base-minimal:stretch
+##phase 1
+#FROM jgoerzen/debian-base-minimal:stretch
+
+##############################phase 2##############################
+#FROM tempproject/moodle:debian-base-minimal
+##Install git
+#RUN apt update && apt -y install git
+
+
+##############################phase 3##############################
+#FROM tempproject/moodle:debian-git
+
+##Clone nd copy moodle@github
+#RUN mkdir -p /home/tools/moodle
+##RUN git clone https://github.com/moodle/moodle.git
+#ADD ./moodle /home/tools/moodle  
+#RUN cd /home/tools/moodle
+#RUN git checkout tags/v3.6.4 -b mp-14-create-moodle-docker-image-compose
+
+##############################phase 3#############################
+FROM tempproject/moodle:debian-git
+RUN apt-get update && apt-get -y install cron
+
+
+
+############################phase 4###############################
+#COPY ./postStart.sh /
+#RUN chmod +x /postStart.sh
+
+## Copy cronjob file to the cron.d directory
+#COPY ./cronjob /etc/cron.d/
+## Give execution rights on the cron job
+#RUN chmod 0644 /etc/cron.d/cronjob
+
+## Apply cron job
+#RUN crontab /etc/cron.d/cronjob
+
+### Create the log file to be able to run tail
+##RUN touch /var/log/cron.log
+
+### Run the command on container startup
+##CMD cron #&& tail -f /var/log/cron.log
 
 
 
