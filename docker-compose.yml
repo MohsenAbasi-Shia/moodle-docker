@@ -1,0 +1,52 @@
+version: "3.3"
+
+services:
+  mysql:
+    image: "mysql:5.7"
+#    network_mode: "bridge"
+    networks:
+      - moodle-net
+    environment:
+      - MYSQL_DATABASE=moodle
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ONETIME_PASSWORD=yes
+      - MYSQL_USER=moodle
+      - MYSQL_PASSWORD='12345'
+    volumes:
+      - ./volume/mysql/data:/var/lib/mysql
+      - ./volume/mysql/log-error:/var/log/mysql/error.log
+    ports:
+      - "3306:3306"
+  moodle:
+    image: "webdevops/php-apache:7.3"
+    networks:
+      - moodle-net
+#    network_mode: "bridge"
+    environment:
+      - MOODLE_DBHOST=mysql
+      - MOODLE_DBPORT=3306
+      - MOODLE_DBUSER=moodle
+      - MOODLE_DBPASS='12345'
+      - MOODLE_DBNAME=bitnami_moodle
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - type: bind
+        source: ./volume/moodle_data
+        target: /moodledata/moodledata
+      - type: bind
+        source: ./volume/gita-moodle
+        target: /app
+    depends_on:
+      - mysql
+
+networks:
+  moodle-net:
+    driver: bridge
+
+#volumes:
+#  mariadb_data:
+#    driver: local
+#  moodle_data:
+#    driver: local
