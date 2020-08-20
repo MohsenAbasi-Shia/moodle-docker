@@ -14,12 +14,13 @@ services:
       - MYSQL_PASSWORD='12345'
     volumes:
       - ./volume/mysql/data:/var/lib/mysql
-      - ./volume/mysql/log-error:/var/log/mysql/error.log
+      - ./volume/mysql/log:/var/log/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
   moodle:
 #    image: "webdevops/php-apache:7.3"
     build: .
+    command: service php7.3-fpm start
     networks:
       - moodle-net
 #    network_mode: "bridge"
@@ -30,8 +31,8 @@ services:
       - MOODLE_DBPASS='12345'
       - MOODLE_DBNAME=bitnami_moodle
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      - "4438:443"
     volumes:
       - type: bind
         source: ./volume/moodle_data
