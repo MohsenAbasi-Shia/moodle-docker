@@ -18,7 +18,8 @@ services:
     ports:
       - "3306:3306"
   moodle:
-    image: "webdevops/php-apache:7.3"
+#    image: "webdevops/php-apache:7.3"
+    build: .
     networks:
       - moodle-net
 #    network_mode: "bridge"
