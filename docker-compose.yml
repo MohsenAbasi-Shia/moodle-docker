@@ -20,7 +20,7 @@ services:
   moodle:
 #    image: "webdevops/php-apache:7.3"
     build: .
-    command: service php7.3-fpm start
+    #command: service php7.3-fpm start && chmod 777 /run/php/ -R
     networks:
       - moodle-net
 #    network_mode: "bridge"
@@ -34,6 +34,9 @@ services:
       - "8080:80"
       - "4438:443"
     volumes:
+#      - ./volume/moodle_nginx_config:/etc/nginx/conf.d
+#      - ./volume/moodle_log:/var/log
+#      - ./volume/moodle_php_config:/etc/php/
       - type: bind
         source: ./volume/moodle_data
         target: /moodledata/moodledata
