@@ -124,20 +124,32 @@ COPY ./config/moodle.conf  /etc/nginx/conf.d/moodle.conf
 
 RUN mv /etc/nginx/conf.d/default.conf /etc/
 
-###################################################################
-RUN apt -y install php7.0-fpm
-RUN apt -y install  php-fpm
-RUN apt -y install  php7.0-fpm
 
-#mkdir /var/www/html/moodledata/
-#service php7.3-fpm status
-RUN service php7.3-fpm start
-#service php7.3-fpm status
-#ls /run/php/
-RUN service php7.3-fpm start
-#ls /run/php/php7.3-fpm.sock 
-#ls /run/php/php7.3-fpm.sock -llh
-RUN chmod 777 /run/php/ -R
-#ls /var/www/html/moodle/config-dist.php 
-RUN chmod 777 /var/www/html/
+
+
+
+
+
+
+
+
+
+
+###################################################################
+#RUN apt -y install php7.0-fpm
+#RUN apt -y install  php-fpm
+#RUN apt -y install  php7.0-fpm
+
+##mkdir /var/www/html/moodledata/
+##service php7.3-fpm status
+
+#RUN service php7.3-fpm start
+##service php7.3-fpm status
+##ls /run/php/
+#RUN service php7.3-fpm start
+##ls /run/php/php7.3-fpm.sock 
+##ls /run/php/php7.3-fpm.sock -llh
+#RUN chmod 777 /run/php/ -R
+##ls /var/www/html/moodle/config-dist.php 
+#RUN chmod 777 /var/www/html/
 
