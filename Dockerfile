@@ -142,7 +142,7 @@ RUN apt -y install php7.3-mysql
 
 
 
-RUN service php7.3-fpm start
+#RUN service php7.3-fpm start
 #service php7.3-fpm status
 #ls /run/php/
 #RUN service php7.3-fpm start
@@ -151,7 +151,7 @@ RUN service php7.3-fpm start
 
 RUN systemctl enable php7.3-fpm
 
-RUN chmod 777 /run/php/ -R
+#RUN chmod 777 /run/php/ -R
 #ls /var/www/html/moodle/config-dist.php 
 
 
