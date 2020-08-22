@@ -168,3 +168,6 @@ RUN chmod 777 /var/log/nginx -R
 
 
 #COPY ./config/config.php /var/www/html/moodle/
+
+#Start ph-fpm service
+CMD service nginx start && rm -rf /run/php/* && service php7.3-fpm start && chmod 777 /run/php -R && tail -F /var/log/nginx/error.log
