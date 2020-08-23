@@ -1,27 +1,3 @@
-
-# this is our first build stage, it will not persist in the final image
-FROM ubuntu as intermediate
-
-# install git
-RUN apt-get update
-RUN apt-get install -y git
-
-# add credentials on build
-#ARG SSH_PRIVATE_KEY
-#RUN mkdir /root/.ssh/
-#RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
-
-# make sure your domain is accepted
-#RUN touch /root/.ssh/known_hosts
-#RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
-
-#ADD ./moodle /moodle
-#RUN git clone https://github.com/moodle/moodle.git
-#RUN git clone http://1322_gitlab_1:8565/root/moodle.git
-#RUN git checkout tags/v3.6.4 -b mp-14-create-moodle-docker-image-compose
-RUN git clone --depth 1 --branch v3.6.4 https://github.com/moodle/moodle.git
-
-###########################################################################3
 FROM nginx:latest
 
 RUN apt update
@@ -50,7 +26,6 @@ RUN apt -y install php-mbstring
 
 RUN apt -y install php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-ldap php-zip php-curl
 
-
 #########################################################################
 #php -version
 #php -m | grep mcrypt
@@ -71,7 +46,6 @@ RUN mkdir -p /etc/php/7.3/mods-available/
 RUN  bash -c "echo extension=/usr/lib/php/20180731/mcrypt.so > /etc/php/7.3/cli/conf.d/mcrypt.ini"
 
 RUN  bash -c "echo extension=/usr/lib/php/20180731/mcrypt.so > /etc/php/7.3/mods-available/mcrypt.ini"
-
 
 # Install prerequisites
 #RUN apt-get -y install php-dev libmcrypt-dev gcc make autoconf libc-dev pkg-config
@@ -99,22 +73,32 @@ RUN  bash -c "echo extension=/usr/lib/php/20180731/mcrypt.so > /etc/php/7.3/mods
 #vi /etc/php/7.3/cli/php.ini 
 #php -m | grep mcrypt
 
-
-
 ###############################################################33
 #Download moodle
 
 RUN mkdir /var/www/html -p
 
-#ADD https://github.com/moodle/moodle/archive/v3.6.4.tar.gz /var/www/html/
+# install git
+RUN apt-get update
+RUN apt-get install -y git
 
-#RUN tar --directory=/var/www/html/moodle -xvzf v3.6.4.tar.gz 
+# add credentials on build
+#ARG SSH_PRIVATE_KEY
+#RUN mkdir /root/.ssh/
+#RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
 
-# copy the repository form the previous image
-COPY --from=intermediate /moodle /var/www/html/moodle
+# make sure your domain is accepted
+#RUN touch /root/.ssh/known_hosts
+#RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
+
+#RUN git clone http://1322_gitlab_1:8565/root/moodle.git
+#RUN git checkout tags/v3.6.4 -b mp-14-create-moodle-docker-image-compose
+
+RUN git clone --depth 1 --branch v3.6.4 https://github.com/moodle/moodle.git /var/www/html/moodle
+#RUN mv moodle /var/www/html/
 
 #RUN chmod 777 /var/www/html/moodle -R
-
+#RUN ls /var/www/html/moodle
 
 #Copy config file of moodle
 
@@ -122,12 +106,7 @@ COPY ./config/moodle.conf  /etc/nginx/conf.d/moodle.conf
 
 RUN mv /etc/nginx/conf.d/default.conf /etc/
 
-
-
-
 ###################################################################
-
-#FROM moodle:before-service-fpm
 RUN apt -y install php7.0-fpm
 RUN apt -y install  php-fpm
 RUN apt -y install  php7.0-fpm
@@ -138,9 +117,6 @@ RUN apt -y install php7.3-mysql
 
 #RUN mkdir /var/www/html/moodledata/
 #service php7.3-fpm status
-
-
-
 
 #RUN service php7.3-fpm start
 #service php7.3-fpm status
@@ -157,15 +133,11 @@ RUN systemctl enable php7.3-fpm
 
 RUN chmod 777 /var/www/html/
 
-
-
-
 #Copy config file of moodle
 
 RUN cp /etc/nginx/conf.d/moodle.conf  /etc/nginx/conf.d/default.conf
 RUN touch /var/log/nginx/error.log
 RUN chmod 777 /var/log/nginx -R
-
 
 #COPY ./config/config.php /var/www/html/moodle/
 
