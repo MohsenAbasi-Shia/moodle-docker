@@ -60,7 +60,6 @@ RUN  bash -c "echo extension=/usr/lib/php/20180731/mcrypt.so > /etc/php/7.3/mods
 # Restart apache
 #sudo service apache2 restart
 
-
 #Install php extension 'mcrypt'
 #ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
 
@@ -118,18 +117,14 @@ RUN apt -y install php7.3-mysql
 #RUN mkdir /var/www/html/moodledata/
 #service php7.3-fpm status
 
-#RUN service php7.3-fpm start
-#service php7.3-fpm status
 #ls /run/php/
-#RUN service php7.3-fpm start
 #ls /run/php/php7.3-fpm.sock 
 #ls /run/php/php7.3-fpm.sock -llh
 
-RUN systemctl enable php7.3-fpm
+#RUN systemctl enable php7.3-fpm
 
 #RUN chmod 777 /run/php/ -R
 #ls /var/www/html/moodle/config-dist.php 
-
 
 RUN chmod 777 /var/www/html/
 
@@ -142,4 +137,5 @@ RUN chmod 777 /var/log/nginx -R
 #COPY ./config/config.php /var/www/html/moodle/
 
 #Start ph-fpm service
-CMD service nginx start && rm -rf /run/php/* && service php7.3-fpm start && chmod 777 /run/php -R && tail -F /var/log/nginx/error.log
+#CMD php7.3-fpm
+CMD service nginx start &&  service php7.3-fpm start && chmod 777 /run/php -R && tail -F /var/log/nginx/error.log
