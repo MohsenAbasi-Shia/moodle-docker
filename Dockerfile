@@ -92,7 +92,9 @@ RUN apt-get install -y git
 #RUN touch /root/.ssh/known_hosts
 #RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
 
-RUN git config http.proxy ............ 
+RUN git config http.proxy http://$PROXY
+ 
+RUN git config https.proxy http://$PROXY
 
 #RUN git clone http://1322_gitlab_1:8565/root/moodle.git
 #RUN git checkout tags/v3.6.4 -b mp-14-create-moodle-docker-image-compose
