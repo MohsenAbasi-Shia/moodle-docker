@@ -1,76 +1,76 @@
-FROM nginx:latest
+FROM docker.itc.aqr.ir/ict/php-fpm-nginx:7.2.18.1
 
-RUN apt update
-RUN apt -y install  software-properties-common
-RUN apt -y install wget
+#RUN apt update
+#RUN apt -y install  software-properties-common
+#RUN apt -y install wget
 
-RUN apt -y install gnupg #gnupg2 gnupg1
+#RUN apt -y install gnupg #gnupg2 gnupg1
 
-RUN wget -q https://packages.sury.org/php/apt.gpg -O- |  apt-key add -
+#RUN wget -q https://packages.sury.org/php/apt.gpg -O- |  apt-key add -
 
-RUN wget -q https://packages.sury.org/php/apt.gpg -O- |  apt-key add -
+#RUN wget -q https://packages.sury.org/php/apt.gpg -O- |  apt-key add -
 
-RUN echo "deb https://packages.sury.org/php/ buster main" | tee /etc/apt/sources.list.d/php.list
+#RUN echo "deb https://packages.sury.org/php/ buster main" | tee /etc/apt/sources.list.d/php.list
 
-RUN apt update
+#RUN apt update
 
-RUN apt -y install php php-fpm
+#RUN apt -y install php php-fpm
 
-RUN apt -y install php-common
+#RUN apt -y install php-common
 
-RUN apt -y install php-mbstring
+#RUN apt -y install php-mbstring
 
-#RUN apt -y install php7.1-xmlrpc php7.1-soap php7.1-gd php7.1-xml php7.1-intl php7.1-mysql php7.1-cli php7.1-mcrypt php7.1-ldap php7.1-zip php7.1-curl
+##RUN apt -y install php7.1-xmlrpc php7.1-soap php7.1-gd php7.1-xml php7.1-intl php7.1-mysql php7.1-cli php7.1-mcrypt php7.1-ldap php7.1-zip php7.1-curl
 
-#RUN apt -y install php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-mcrypt php-ldap php-zip php-curl
+##RUN apt -y install php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-mcrypt php-ldap php-zip php-curl
 
-RUN apt -y install php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-ldap php-zip php-curl
+#RUN apt -y install php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-ldap php-zip php-curl
 
 #########################################################################
-#php -version
-#php -m | grep mcrypt
+##php -version
+##php -m | grep mcrypt
 
-RUN apt-get -y install php-dev libmcrypt-dev php-pear
-RUN pecl channel-update pecl.php.net
-#RUN pecl install channel://pecl.php.net/mcrypt-1.0.2
+#RUN apt-get -y install php-dev libmcrypt-dev php-pear
+#RUN pecl channel-update pecl.php.net
+##RUN pecl install channel://pecl.php.net/mcrypt-1.0.2
 
 
-RUN apt-get -y install gcc make autoconf libc-dev pkg-config
-RUN apt-get -y install libmcrypt-dev
-RUN pecl install mcrypt-1.0.3
+#RUN apt-get -y install gcc make autoconf libc-dev pkg-config
+#RUN apt-get -y install libmcrypt-dev
+#RUN pecl install mcrypt-1.0.3
 
-RUN mkdir -p /etc/php/7.3/cli/conf.d/
+#RUN mkdir -p /etc/php/7.3/cli/conf.d/
 
-RUN mkdir -p /etc/php/7.3/mods-available/
+#RUN mkdir -p /etc/php/7.3/mods-available/
 
-RUN  bash -c "echo extension=/usr/lib/php/20180731/mcrypt.so > /etc/php/7.3/cli/conf.d/mcrypt.ini"
+#RUN  bash -c "echo extension=/usr/lib/php/20180731/mcrypt.so > /etc/php/7.3/cli/conf.d/mcrypt.ini"
 
-RUN  bash -c "echo extension=/usr/lib/php/20180731/mcrypt.so > /etc/php/7.3/mods-available/mcrypt.ini"
+#RUN  bash -c "echo extension=/usr/lib/php/20180731/mcrypt.so > /etc/php/7.3/mods-available/mcrypt.ini"
 
-# Install prerequisites
-#RUN apt-get -y install php-dev libmcrypt-dev gcc make autoconf libc-dev pkg-config
+## Install prerequisites
+##RUN apt-get -y install php-dev libmcrypt-dev gcc make autoconf libc-dev pkg-config
 
-# Compile mcrypt extension
-#RUN pecl install mcrypt-1.0.2
-# Just press enter when it asks about libmcrypt prefix
+## Compile mcrypt extension
+##RUN pecl install mcrypt-1.0.2
+## Just press enter when it asks about libmcrypt prefix
 
-# Enable extension for apache
-#RUN echo "extension=mcrypt.so" | tee -a /etc/php/7.3/cli/conf.d/mcrypt.ini
+## Enable extension for apache
+##RUN echo "extension=mcrypt.so" | tee -a /etc/php/7.3/cli/conf.d/mcrypt.ini
 
-# Restart apache
-#sudo service apache2 restart
+## Restart apache
+##sudo service apache2 restart
 
-#Install php extension 'mcrypt'
-#ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
+##Install php extension 'mcrypt'
+##ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
 
-#RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
-#    install-php-extensions mcrypt
+##RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
+##    install-php-extensions mcrypt
 
-#php -m | grep mcrypt
-#apt install vim
-#vi ~/.vimrc
-#vi /etc/php/7.3/cli/php.ini 
-#php -m | grep mcrypt
+##php -m | grep mcrypt
+##apt install vim
+##vi ~/.vimrc
+##vi /etc/php/7.3/cli/php.ini 
+##php -m | grep mcrypt
 
 ###############################################################33
 #Download moodle
@@ -106,36 +106,36 @@ COPY ./config/moodle.conf  /etc/nginx/conf.d/moodle.conf
 RUN mv /etc/nginx/conf.d/default.conf /etc/
 
 ###################################################################
-RUN apt -y install php7.0-fpm
-RUN apt -y install  php-fpm
-RUN apt -y install  php7.0-fpm
+#RUN apt -y install php7.0-fpm
+#RUN apt -y install  php-fpm
+#RUN apt -y install  php7.0-fpm
 
-RUN apt -y install  php7.3-fpm
+#RUN apt -y install  php7.3-fpm
 
-RUN apt -y install php7.3-mysql
+#RUN apt -y install php7.3-mysql
 
-#RUN mkdir /var/www/html/moodledata/
-#service php7.3-fpm status
+##RUN mkdir /var/www/html/moodledata/
+##service php7.3-fpm status
 
-#ls /run/php/
-#ls /run/php/php7.3-fpm.sock 
-#ls /run/php/php7.3-fpm.sock -llh
+##ls /run/php/
+##ls /run/php/php7.3-fpm.sock 
+##ls /run/php/php7.3-fpm.sock -llh
 
-#RUN systemctl enable php7.3-fpm
+##RUN systemctl enable php7.3-fpm
 
-#RUN chmod 777 /run/php/ -R
-#ls /var/www/html/moodle/config-dist.php 
+##RUN chmod 777 /run/php/ -R
+##ls /var/www/html/moodle/config-dist.php 
 
-RUN chmod 777 /var/www/html/
+#RUN chmod 777 /var/www/html/
 
-#Copy config file of moodle
+##Copy config file of moodle
 
-RUN cp /etc/nginx/conf.d/moodle.conf  /etc/nginx/conf.d/default.conf
-RUN touch /var/log/nginx/error.log
-RUN chmod 777 /var/log/nginx -R
+#RUN cp /etc/nginx/conf.d/moodle.conf  /etc/nginx/conf.d/default.conf
+#RUN touch /var/log/nginx/error.log
+#RUN chmod 777 /var/log/nginx -R
 
-#COPY ./config/config.php /var/www/html/moodle/
+##COPY ./config/config.php /var/www/html/moodle/
 
-#Start ph-fpm service
-#CMD php7.3-fpm
-CMD service nginx start &&  service php7.3-fpm start && chmod 777 /run/php -R && tail -F /var/log/nginx/error.log
+###Start ph-fpm service
+###CMD php7.3-fpm
+#CMD service nginx start &&  service php7.3-fpm start && chmod 777 /run/php -R && tail -F /var/log/nginx/error.log

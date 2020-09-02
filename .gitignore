@@ -1,1 +1,10 @@
+secrets/
+.idea/
+
+tahatemp*
+*.env
+volumes
+docker-images/sftp/files/users.conf
+*.htpasswd
+
 volume

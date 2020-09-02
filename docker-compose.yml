@@ -7,16 +7,16 @@ services:
     networks:
       - moodle-net
     environment:
-      - MYSQL_DATABASE=moodle
+      - MYSQL_DATABASE='${DB_DATABASE}'
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_ONETIME_PASSWORD=yes
-      - MYSQL_USER=moodle
-      - MYSQL_PASSWORD='12345'
+      - MYSQL_USER='${DB_USER}'
+      - MYSQL_PASSWORD='${DB_PASSWORD}'
     volumes:
-      - ./volume/mysql/data:/var/lib/mysql
-      - ./volume/mysql/log:/var/log/mysql
+      - ./volumes/mysql/data:/var/lib/mysql
+      - ./volumes/mysql/log:/var/log/mysql
     ports:
-      - "3307:3306"
+      - ${DB_PORT}:3306
   moodle:
 #    image: "webdevops/php-apache:7.3"
     build: .
@@ -25,23 +25,23 @@ services:
       - moodle-net
 #    network_mode: "bridge"
     environment:
-      - MOODLE_DBHOST=mysql
-      - MOODLE_DBPORT=3306
-      - MOODLE_DBUSER=moodle
-      - MOODLE_DBPASS='12345'
-      - MOODLE_DBNAME=bitnami_moodle
+      - MOODLE_DBHOST='${DB_HOST}'
+      - MOODLE_DBPORT=${DB_PORT}
+      - MOODLE_DBUSER='${DB_USER}'
+      - MOODLE_DBPASS='${DB_PASSWORD}'
+      - MOODLE_DBNAME=moodle
     ports:
-      - "8080:80"
-      - "4438:443"
+      - "${APP_PORT}:80"
+      - "${APP_PORT_SSL}:443"
     volumes:
-#      - ./volume/moodle_nginx_config:/etc/nginx/conf.d
-#      - ./volume/moodle_log:/var/log
-#      - ./volume/moodle_php_config:/etc/php/
+#      - ./volumes/moodle_nginx_config:/etc/nginx/conf.d
+#      - ./volumes/moodle_log:/var/log
+#      - ./volumes/moodle_php_config:/etc/php/
       - type: bind
-        source: ./volume/moodle_data
+        source: ./volumes/moodle_data
         target: /moodledata/moodledata
       - type: bind
-        source: ./volume/gita-moodle
+        source: ./volumes/gita-moodle
         target: /app
     depends_on:
       - mysql
