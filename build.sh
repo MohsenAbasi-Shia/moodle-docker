@@ -6,7 +6,7 @@ set -x
 
 docker build --force-rm  \
     -t $REPO_NAME:$VERSION \
-    --build-arg PERSONALACCESSTOKEN=$TOKEN \
-    --build-arg USERNAME=$USER \
-    --build-arg BRANCH=$VERSION \
+#    --build-arg PERSONALACCESSTOKEN=$TOKEN \
+#    --build-arg USERNAME=$USER \
+#    --build-arg BRANCH=$VERSION \
     --build-arg PROXY=$PROXY .

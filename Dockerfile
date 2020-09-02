@@ -1,5 +1,7 @@
 FROM docker.itc.aqr.ir/ict/php-fpm-nginx:7.2.18.1
 
+ARG PROXY
+
 #RUN apt update
 #RUN apt -y install  software-properties-common
 #RUN apt -y install wget
@@ -89,6 +91,8 @@ RUN apt-get install -y git
 # make sure your domain is accepted
 #RUN touch /root/.ssh/known_hosts
 #RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
+
+RUN git config http.proxy ............ 
 
 #RUN git clone http://1322_gitlab_1:8565/root/moodle.git
 #RUN git checkout tags/v3.6.4 -b mp-14-create-moodle-docker-image-compose
